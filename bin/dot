@@ -38,18 +38,31 @@ while test $# -gt 0; do
 	shift
 done
 
-export ZSH=$HOME/.dotfiles
-
 # Set macOS defaults
-$ZSH/macos/set-defaults.sh
+$DOTFILES_DIR/macos/set-defaults.sh
 
 # Install homebrew
-$ZSH/homebrew/install.sh 2>&1
+if test ! $(which brew)
+then
+  echo_info "Installing Homebrew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" > /dev/null 2>&1
+	brew tap Homebrew/bundle > /dev/null 2>&1
+	echo_ok "Homebrew installed"
+else
+  echo_skip "Homebrew already installed"
+  echo_info "Updating Homebrew"
+  brew update > /dev/null 2>&1
+  brew upgrade > /dev/null 2>&1
+  echo_ok "Homebrew Updated"
+fi
 
-# Upgrade homebrew
-echo "› brew update"
-brew update
+echo_info "Installing packages/casks from Brewfile"
+brew bundle
+echo_done "homebrew"
 
-# Install software
-echo "› $ZSH/script/install"
-$ZSH/script/install
+# Install App Store apps
+$DOTFILES_DIR/macos/appstore.sh
+
+# Run topics' install scripts
+echo_info "Executing script/install"
+$DOTFILES_DIR/script/install

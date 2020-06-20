@@ -29,7 +29,10 @@ do
 done
 
 # initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+	compinit
+done
 compinit
 
 # load every completion after autocomplete loads

@@ -1,5 +1,39 @@
 #!/usr/bin/env bash
 #
+
+# Install Xcode
+if ! xcode-select --print-path &> /dev/null; then
+	# Prompt user to install the XCode Command Line Tools
+	xcode-select --install &> /dev/null
+	# Wait until the XCode Command Line Tools are installed
+	until xcode-select --print-path &> /dev/null; do
+		sleep 5
+	done
+  echo_ok 'Installed Xcode Command Line Tools'
+
+	# Prompt user to agree to the terms of the Xcode license
+	# https://github.com/alrra/dotfiles/issues/10
+  echo_user 'Please accept the License Agreement'
+	sudo xcodebuild -license
+  echo_ok 'Xcode license has been accepted'
+else
+	echo_skip "Xcode Command Line Tools have already been installed"
+fi
+
+# Point the `xcode-select` developer directory to
+# the appropriate directory from within `Xcode.app`
+# https://github.com/alrra/dotfiles/issues/13
+if [ -e /Applications/Xcode.app ]; then
+	sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+	echo_ok 'Ensured "xcode-select" developer directory points  Xcode'
+fi
+
+echo_done "xcode"
+
+# Clone repos into library
+
+sh -c "$DOTFILES_DIR/system/repos.sh"
+
 # Run all dotfiles installers.
 
 set -e
@@ -8,3 +42,5 @@ cd "$(dirname $0)"/..
 
 # find the installers and run them iteratively
 find . -name install.sh | while read installer ; do sh -c "${installer}" ; done
+
+echo_done "script/install"

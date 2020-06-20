@@ -6,7 +6,8 @@
 # located at ~/.dotfiles/atom.symlink/packages.txt
 #
 # You can generate a new list based on currently installed
-# packages via atom-package-backup
+# packages via:
+#				apm list --installed --bare > ~/.dotfiles/atom.symlink/packages.txt
 
 set -e
 
