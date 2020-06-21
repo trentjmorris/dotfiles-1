@@ -5,8 +5,6 @@ open -a "App Store"
 
 read -n 1 action
 
-echo "Good you pressed a key!"
-
 # close App Store
 osascript -e 'quit app "App Store"'
 
@@ -30,7 +28,7 @@ sleep 1
 
 if [[ $(mas account) == 'trent@trentmorris.com' ]]  > /dev/null 2>&1;
 then
-  echo_ok "Successfully signed into the App Store."
+  echo_info "Installing App Store applications"
   mas_install "Affinity Designer" 824171161
   mas_install "Amphetamine" 937984704
   mas_install "Bear" 1091189122
@@ -40,9 +38,9 @@ then
   mas_install "Pages" 409201541
   mas_install "Noto" 1459055246
   mas_install "Numbers" 409203825
-  mas_install 'Snippets Lab' 1006087419
-  mas_install 'Spark' 1176895641
-  mas_install 'Things' 904280696
+  mas_install "Snippets Lab" 1006087419
+  mas_install "Spark" 1176895641
+  mas_install "Things" 904280696
   mas_install "Twitter" 409789998
   echo_ok "App Store apps have been installed"
 else
