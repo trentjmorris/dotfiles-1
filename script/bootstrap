@@ -132,4 +132,7 @@ then
   fi
 fi
 
+# load newly bootstrapped zsh environment
+source $HOME/.zshrc
+
 echo_done "script/bootstrap"
