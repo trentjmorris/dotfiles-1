@@ -31,6 +31,7 @@ sleep 1
 if [[ $(mas account) == 'trent@trentmorris.com' ]]  > /dev/null 2>&1;
 then
   echo_ok "Successfully signed into the App Store."
+  mas_install "Affinity Designer" 824171161
   mas_install "Amphetamine" 937984704
   mas_install "Bear" 1091189122
   mas_install "Deliveries" 924726344
@@ -42,6 +43,7 @@ then
   mas_install 'Snippets Lab' 1006087419
   mas_install 'Spark' 1176895641
   mas_install 'Things' 904280696
+  mas_install "Twitter" 409789998
   echo_ok "App Store apps have been installed"
 else
   echo_fail "Cannot install AppStore apps. It's possible you're not signed into your account\n\
